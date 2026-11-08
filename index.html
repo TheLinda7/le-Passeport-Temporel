@@ -1,0 +1,831 @@
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap');
+    
+    :root {
+      --bg-deep: #000000;
+      --primary-pink: #ff007f;
+      --primary-purple: #9d00ff;
+      --glow-magenta: #ff00d4;
+      --cyan-accent: #00f0ff;
+      --text-white: #ffffff;
+      --text-muted: #a39bb8;
+      --card-bg: rgba(12, 6, 24, 0.9);
+      --border-neon: rgba(255, 0, 127, 0.4);
+    }
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; }
+    
+    body {
+      background: var(--bg-deep);
+      color: var(--text-white);
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+    }
+    
+    /* --- DÉCORS COSMIQUES ET THÉORIE DU BIG BANG --- */
+    .space-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+      background: #000000;
+    }
+    
+    .bigbang-singularity {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 10px; height: 10px;
+      background: #ffffff;
+      border-radius: 50%;
+      box-shadow: 0 0 50px 30px #ff007f, 0 0 100px 60px #9d00ff, 0 0 180px 100px #00f0ff;
+      transform: translate(-50%, -50%);
+      opacity: 0.25;
+      animation: expandUniverse 10s infinite alternate ease-in-out;
+    }
+    
+    @keyframes expandUniverse {
+      0% { transform: translate(-50%, -50%) scale(1); opacity: 0.2; }
+      100% { transform: translate(-50%, -50%) scale(25); opacity: 0.45; }
+    }
+    
+    .blackhole-decor {
+      position: absolute;
+      top: 6%; right: 4%;
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      background: #000;
+      box-shadow: 0 0 25px 8px #ff007f, inset 0 0 15px #00f0ff;
+      animation: rotateBlackhole 12s linear infinite;
+    }
+    
+    @keyframes rotateBlackhole {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.08); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
+    
+    .galaxy-spiral {
+      position: absolute;
+      bottom: 5%; left: 2%;
+      width: 120px; height: 120px;
+      opacity: 0.35;
+      filter: drop-shadow(0 0 15px #9d00ff);
+      animation: spinGalaxy 20s linear infinite;
+    }
+    
+    @keyframes spinGalaxy {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* --- STRUCTURE PRINCIPALE AGRANDIE --- */
+    .journey-container {
+      width: 100%;
+      max-width: 100%;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+      background: rgba(8, 4, 16, 0.95);
+      border: 1px solid rgba(255, 0, 127, 0.35);
+      border-radius: 16px;
+      padding: 20px 15px;
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.9), 0 0 25px rgba(255, 0, 127, 0.2);
+      backdrop-filter: blur(12px);
+    }
+    
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    
+    .brand-tag {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 11px;
+      color: var(--primary-pink);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-shadow: 0 0 8px var(--primary-pink);
+    }
+    
+    .audio-btn {
+      background: rgba(255, 0, 127, 0.15);
+      border: 1px solid var(--primary-pink);
+      color: var(--text-white);
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.3s;
+    }
+    .audio-btn:hover { background: var(--primary-pink); box-shadow: 0 0 12px var(--primary-pink); }
+    
+    .steps {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .step[aria-current="step"] { color: var(--text-white); }
+    .step-number {
+      width: 26px; height: 26px;
+      display: grid; place-items: center;
+      border: 1px solid var(--border-neon);
+      border-radius: 50%;
+      font-size: 11px;
+      font-family: 'Orbitron', sans-serif;
+      color: var(--text-muted);
+    }
+    .step[aria-current="step"] .step-number {
+      background: var(--primary-pink);
+      border-color: #fff;
+      color: #fff;
+      box-shadow: 0 0 15px var(--primary-pink);
+    }
+    .step-line { height: 1px; background: var(--border-neon); flex: 1; margin: 0 15px; }
+    
+    .page-title { text-align: center; margin-bottom: 20px; }
+    .page-title h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 26px;
+      font-weight: 900;
+      font-style: italic;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      background: linear-gradient(180deg, #ffffff 0%, #ff7be5 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 20px rgba(255, 0, 127, 0.6);
+      margin-bottom: 6px;
+    }
+    .page-title p { color: var(--text-muted); font-size: 14px; font-weight: 500; }
+    
+    .progress-meta { display: flex; justify-content: space-between; color: var(--text-muted); font-size: 13px; margin-top: 15px; font-weight: 600; }
+    .progress-meta strong { color: var(--cyan-accent); font-family: 'Orbitron', sans-serif; }
+    .progress-track {
+      height: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 6px;
+      margin: 8px 0 22px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 0, 127, 0.3);
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary-purple), var(--primary-pink), var(--cyan-accent));
+      width: 20%;
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 0 12px var(--primary-pink);
+    }
+    
+    /* --- FRISE CHRONOLOGIQUE HORIZONTALE --- */
+    .horizontal-timeline-wrapper {
+      overflow-x: auto;
+      padding-bottom: 15px;
+      margin-bottom: 10px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--primary-pink) rgba(255, 255, 255, 0.05);
+    }
+    
+    .horizontal-timeline-wrapper::-webkit-scrollbar { height: 6px; }
+    .horizontal-timeline-wrapper::-webkit-scrollbar-thumb { background: var(--primary-pink); border-radius: 4px; }
+    
+    .timeline-horizontal {
+      display: flex;
+      gap: 16px;
+      position: relative;
+      min-width: max-content;
+      padding-top: 45px;
+    }
+    
+    .timeline-horizontal:before {
+      content: "";
+      position: absolute;
+      top: 15px;
+      left: 30px;
+      right: 30px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary-pink), var(--primary-purple), var(--cyan-accent));
+      opacity: 0.5;
+    }
+    
+    .fragment-card {
+      width: 195px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      background: var(--card-bg);
+      border: 1px solid var(--border-neon);
+      border-radius: 12px;
+      padding: 18px 14px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+      transition: all 0.3s ease;
+    }
+    .fragment-card:hover { border-color: var(--primary-pink); transform: translateY(-4px); }
+    .fragment-card.locked { color: var(--text-muted); background: rgba(8, 4, 14, 0.6); border-color: rgba(255, 255, 255, 0.08); }
+    
+    .timeline-node {
+      position: absolute;
+      top: -45px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .node-date {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 11px;
+      color: var(--primary-pink);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .locked .node-date { color: var(--text-muted); }
+    
+    .node-dot {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      border: 2px solid var(--border-neon);
+      background: #000000;
+      display: grid;
+      place-items: center;
+    }
+    .unlocked .node-dot {
+      border-color: var(--cyan-accent);
+      background: rgba(0, 240, 255, 0.25);
+      color: var(--cyan-accent);
+      box-shadow: 0 0 10px var(--cyan-accent);
+    }
+    
+    .fragment-art {
+      width: 48px; height: 48px;
+      margin: 6px auto 10px;
+      display: grid; place-items: center;
+      flex-shrink: 0;
+      color: var(--primary-pink);
+      background: rgba(255, 0, 127, 0.12);
+      border-radius: 50%;
+      border: 1px solid rgba(255, 0, 127, 0.3);
+    }
+    .locked .fragment-art { color: var(--text-muted); background: rgba(255, 255, 255, 0.04); border-color: transparent; }
+    
+    .fragment-text { flex: 1; text-align: center; }
+    .fragment-text strong { font-size: 15px; font-weight: 700; display: block; margin-bottom: 6px; }
+    .fragment-text p { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+    
+    .fragment-status {
+      margin-top: 12px;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      color: var(--cyan-accent);
+      font-weight: 700;
+    }
+    .locked .fragment-status { color: var(--text-muted); font-weight: 500; }
+    
+    .action-frame {
+      margin-top: 20px;
+      padding: 3px;
+      border: 1px solid var(--primary-pink);
+      border-radius: 8px;
+      background: transparent;
+      box-shadow: 0 0 15px rgba(255, 0, 127, 0.25);
+    }
+    
+    .action {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid var(--primary-pink);
+      border-radius: 6px;
+      background: rgba(255, 0, 127, 0.2);
+      color: var(--text-white);
+      padding: 16px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      width: 100%;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      transition: all 0.3s ease;
+    }
+    .action:hover {
+      background: var(--primary-pink);
+      box-shadow: 0 0 25px var(--primary-pink);
+    }
+    
+    /* --- ÉCRAN DE SOUVENIR (FIN DE VISITE) --- */
+    .souvenir-screen {
+      display: none;
+      text-align: center;
+      padding: 20px 10px;
+    }
+    .souvenir-screen h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 24px;
+      color: var(--text-white);
+      margin-bottom: 10px;
+      text-shadow: 0 0 15px var(--primary-pink);
+    }
+    .souvenir-screen p {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
+    .email-input-group {
+      margin-bottom: 18px;
+      text-align: left;
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .email-input-group label {
+      display: block;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .email-input-group input {
+      width: 100%;
+      padding: 14px 15px;
+      background: rgba(20, 10, 35, 0.9);
+      border: 1px solid var(--border-neon);
+      border-radius: 6px;
+      color: var(--text-white);
+      font-size: 14px;
+      outline: none;
+    }
+    .email-input-group input:focus { border-color: var(--cyan-accent); box-shadow: 0 0 10px rgba(0, 240, 255, 0.3); }
+    
+    .consent-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      text-align: left;
+      max-width: 100%;
+      margin: 0 auto 20px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .consent-group input { margin-top: 2px; accent-color: var(--primary-pink); }
+    
+    .souvenir-btn {
+      background: var(--primary-pink);
+      border: none;
+      color: var(--text-white);
+      padding: 16px 25px;
+      border-radius: 6px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      text-transform: uppercase;
+      box-shadow: 0 0 20px rgba(255, 0, 127, 0.5);
+      transition: all 0.3s;
+    }
+    .souvenir-btn:hover { background: #ff1a8c; box-shadow: 0 0 30px var(--primary-pink); }
+    
+    .souvenir-links {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 13px;
+    }
+    .souvenir-links a {
+      color: var(--cyan-accent);
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .souvenir-links a:hover { text-decoration: underline; }
+    
+    .rgpd-footer {
+      margin-top: 30px;
+      font-size: 11px;
+      color: var(--text-muted);
+      opacity: 0.7;
+      line-height: 1.4;
+    }
+    
+    /* LIEN DÉCOUVRIR MON SOUVENIR SOUS LE BOUTON */
+    .discover-souvenir-link {
+      display: none;
+      margin-top: 15px;
+      text-align: center;
+      font-size: 14px;
+      color: var(--cyan-accent);
+      cursor: pointer;
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 1px;
+      transition: all 0.2s;
+    }
+    .discover-souvenir-link:hover { text-shadow: 0 0 10px var(--cyan-accent); }
+    
+    /* PARTICULES COSMIQUES DE VICTOIRE */
+    .cosmic-particle {
+      position: fixed;
+      top: -40px;
+      font-size: 26px;
+      pointer-events: none;
+      z-index: 999;
+      filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.7));
+      animation: cosmicFall 3.8s linear infinite;
+    }
+    
+    @keyframes cosmicFall {
+      0% { transform: translateY(0) rotate(0deg) scale(0.7); opacity: 1; }
+      50% { transform: translateY(50vh) rotate(180deg) scale(1.2); }
+      100% { transform: translateY(105vh) rotate(360deg) scale(0.8); opacity: 0; }
+    }
+    
+    svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    </style>
+    
+    <!-- DÉCORS COSMIQUES THÉORIE DU BIG BANG -->
+    <div class="space-bg">
+      <div class="bigbang-singularity"></div>
+      <div class="blackhole-decor"></div>
+      
+      <svg class="galaxy-spiral" viewBox="0 0 100 100" fill="none" stroke="#9d00ff" stroke-width="1.5">
+        <path d="M50 50 Q75 25 85 50 T50 85 T15 50 T50 15"/>
+        <path d="M50 50 Q25 75 15 50 T50 15 T85 50 T50 85"/>
+        <circle cx="50" cy="50" r="8" fill="#ff007f"/>
+      </svg>
+    </div>
+    
+    <div class="journey-container">
+      <div class="top-bar">
+        <span class="brand-tag">Big Bang · Musée de Strasbourg</span>
+        <button class="audio-btn" id="audio-toggle">
+          🔊 Ambiance Audio: OFF
+        </button>
+      </div>
+    
+      <div class="steps">
+        <div class="step"><span class="step-number">1</span> Activation</div>
+        <div class="step-line"></div>
+        <div class="step" aria-current="step"><span class="step-number">2</span> Votre voyage</div>
+        <div class="step-line"></div>
+        <div class="step"><span class="step-number">3</span> Votre souvenir</div>
+      </div>
+    
+      <!-- VUE 1 : FRISE ET BORNES -->
+      <div id="timeline-view">
+        <div class="page-title">
+          <h1>Votre Passeport Temporel</h1>
+          <p>De la première étincelle à aujourd'hui.<br>Découvrez un fragment dans chaque salle.</p>
+        </div>
+    
+        <div class="progress-meta">
+          <span>Votre exploration</span>
+          <strong id="progress-text">1 / 5 fragments collectés</strong>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+    
+        <div class="horizontal-timeline-wrapper">
+          <div class="timeline-horizontal">
+            
+            <!-- BORNE 1 (Débloquée) -->
+            <div class="fragment-card unlocked">
+              <div class="timeline-node">
+                <span class="node-date">13,8 MDS ANS</span>
+                <div class="node-dot"><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg></div>
+              </div>
+              <div class="fragment-art"><svg viewBox="0 0 24 24"><path d="m12 2 2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5Z"/></svg></div>
+              <div class="fragment-text">
+                <strong>L'Expansion</strong>
+                <p>L'espace se dilate. L'histoire de notre Univers commence.</p>
+              </div>
+              <div class="fragment-status">✓ Collecté</div>
+            </div>
+    
+            <!-- BORNE 2 (Verrouillée) -->
+            <div class="fragment-card locked">
+              <div class="timeline-node">
+                <span class="node-date">380 000 ANS</span>
+                <div class="node-dot"><svg viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V6a4 4 0 0 1 8 0v4"/></svg></div>
+              </div>
+              <div class="fragment-art"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="10" ry="4"/><circle cx="12" cy="12" r="1"/></svg></div>
+              <div class="fragment-text">
+                <strong>Formation Atomes</strong>
+                <p>Scannez la borne dans la salle pour débloquer.</p>
+              </div>
+              <div class="fragment-status">🔒 Verrouillé</div>
+            </div>
+    
+            <!-- BORNE 3 (Verrouillée) -->
+            <div class="fragment-card locked">
+              <div class="timeline-node">
+                <span class="node-date">PREMIÈRES ÉTOILES</span>
+                <div class="node-dot"><svg viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V6a4 4 0 0 1 8 0v4"/></svg></div>
+              </div>
+              <div class="fragment-art"><svg viewBox="0 0 24 24"><path d="m12 2 2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5Z"/></svg></div>
+              <div class="fragment-text">
+                <strong>Étoiles & Quasars</strong>
+                <p>Scannez la borne dans la salle pour débloquer.</p>
+              </div>
+              <div class="fragment-status">🔒 Verrouillé</div>
+            </div>
+    
+            <!-- BORNE 4 (Verrouillée) -->
+            <div class="fragment-card locked">
+              <div class="timeline-node">
+                <span class="node-date">GALAXIES</span>
+                <div class="node-dot"><svg viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V6a4 4 0 0 1 8 0v4"/></svg></div>
+              </div>
+              <div class="fragment-art"><svg viewBox="0 0 24 24"><path d="M4 15c-4-8 12-13 15-7 4 8-12 13-15 7Z"/></svg></div>
+              <div class="fragment-text">
+                <strong>Trous Noirs</strong>
+                <p>Scannez la borne dans la salle pour débloquer.</p>
+              </div>
+              <div class="fragment-status">🔒 Verrouillé</div>
+            </div>
+    
+            <!-- BORNE 5 (Verrouillée) -->
+            <div class="fragment-card locked">
+              <div class="timeline-node">
+                <span class="node-date">AUJOURD'HUI</span>
+                <div class="node-dot"><svg viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V6a4 4 0 0 1 8 0v4"/></svg></div>
+              </div>
+              <div class="fragment-art"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg></div>
+              <div class="fragment-text">
+                <strong>Cosmologie</strong>
+                <p>Scannez la borne dans la salle pour débloquer.</p>
+              </div>
+              <div class="fragment-status">🔒 Verrouillé</div>
+            </div>
+    
+          </div>
+        </div>
+    
+        <div class="action-frame">
+          <button class="action" id="sim-btn">
+            <svg viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m8 0h5v-5M2 12h20"/></svg>
+            Simuler le scan d’une borne
+          </button>
+        </div>
+        
+        <!-- Lien "Découvrir mon souvenir" qui apparaît à la fin -->
+        <div class="discover-souvenir-link" id="discover-souvenir-btn">
+          Découvrir mon souvenir →
+        </div>
+      </div>
+    
+      <!-- VUE 2 : ÉCRAN DE SOUVENIR (FIN DE VISITE) -->
+      <div id="souvenir-view" class="souvenir-screen">
+        <h2>Félicitations, vous avez complété votre Passeport !</h2>
+        <p>Les cinq fragments de notre histoire sont maintenant les vôtres.</p>
+        
+        <div class="email-input-group">
+          <label>Saisissez votre e-mail pour recevoir votre souvenir</label>
+          <input type="email" id="visitor-email" placeholder="Votre adresse e-mail">
+        </div>
+    
+        <div class="consent-group">
+          <input type="checkbox" id="rgpd-consent">
+          <label for="rgpd-consent">J'accepte que mon adresse e-mail soit utilisée pour recevoir mon souvenir de visite. Je peux retirer mon consentement à tout moment.</label>
+        </div>
+    
+        <button class="souvenir-btn" id="send-souvenir-btn">Recevoir mon souvenir</button>
+    
+        <div class="souvenir-links">
+          <a id="continue-without-email">Continuer sans laisser mon e-mail →</a>
+          <a id="back-to-fragments">← Revoir mes fragments</a>
+        </div>
+    
+        <div class="rgpd-footer">
+          Vos données de session expirent et sont automatiquement supprimées sous 24h à 30 jours conformément au RGPD. Pas de collecte forcée.
+        </div>
+      </div>
+    
+    </div>
+    
+    <script>
+      let collectedCount = 1;
+      const totalFragments = 5;
+      const simBtn = document.getElementById('sim-btn');
+      const progressText = document.getElementById('progress-text');
+      const progressFill = document.getElementById('progress-fill');
+      const audioToggle = document.getElementById('audio-toggle');
+      
+      const timelineView = document.getElementById('timeline-view');
+      const souvenirView = document.getElementById('souvenir-view');
+      const discoverSouvenirBtn = document.getElementById('discover-souvenir-btn');
+    
+      const descriptions = {
+        2: "Les premiers atomes d'hydrogène se forment. La lumière diffuse est émise.",
+        3: "Les premières étoiles s'allument et illuminent les ténèbres primordiales.",
+        4: "Des milliards d'étoiles s'assemblent autour de trous noirs supermassifs.",
+        5: "Sur Terre, l'humanité contemple le rayonnement fossile et explore l'Univers."
+      };
+    
+      let audioCtx = null;
+      let isAudioOn = false;
+      let ambientNodes = [];
+    
+      function initAudio() {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+      }
+    
+      // Génération d'une nappe sonore spatiale (ambiance cosmique d'arrière-plan)
+      function startAmbientSpaceSound() {
+        if (!audioCtx) return;
+        stopAmbientSpaceSound();
+    
+        // Accord cosmique mystique (frequentiels profonds et harmoniques)
+        const frequencies = [65.41, 98.00, 130.81, 196.00, 261.63]; // C2, G2, C3, G3, C4
+        
+        const masterGain = audioCtx.createGain();
+        masterGain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        masterGain.connect(audioCtx.destination);
+        ambientNodes.push(masterGain);
+    
+        frequencies.forEach((freq, index) => {
+          const osc = audioCtx.createOscillator();
+          const gainNode = audioCtx.createGain();
+          
+          osc.type = index % 2 === 0 ? 'sine' : 'triangle';
+          osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+    
+          // Modulation lente de volume pour un effet organique/ambiant
+          const lfo = audioCtx.createOscillator();
+          const lfoGain = audioCtx.createGain();
+          lfo.frequency.setValueAtTime(0.05 + index * 0.02, audioCtx.currentTime);
+          lfoGain.gain.setValueAtTime(0.02, audioCtx.currentTime);
+          
+          lfo.connect(gainNode.gain);
+          gainNode.gain.setValueAtTime(0.04, audioCtx.currentTime);
+          
+          osc.connect(gainNode);
+          gainNode.connect(masterGain);
+          
+          osc.start();
+          lfo.start();
+          
+          ambientNodes.push(osc);
+          ambientNodes.push(lfo);
+          ambientNodes.push(gainNode);
+        });
+      }
+    
+      function stopAmbientSpaceSound() {
+        ambientNodes.forEach(node => {
+          try {
+            if (node.stop) node.stop();
+            node.disconnect();
+          } catch(e) {}
+        });
+        ambientNodes = [];
+      }
+    
+      function playScanSound() {
+        if (!isAudioOn || !audioCtx) return;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.3);
+        gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.3);
+      }
+    
+      audioToggle.addEventListener('click', () => {
+        initAudio();
+        isAudioOn = !isAudioOn;
+        audioToggle.textContent = isAudioOn ? "🔊 Ambiance Audio: ON" : "🔇 Ambiance Audio: OFF";
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+        if (isAudioOn) {
+          startAmbientSpaceSound();
+        } else {
+          stopAmbientSpaceSound();
+        }
+      });
+    
+      function launchCosmicRain() {
+        const cosmicSymbols = ['💥', '🌌', '☄️', '🪐', '🕳️', '🌟', '✨', '🌍', '💫', '⚛️'];
+        for (let i = 0; i < 50; i++) {
+          setTimeout(() => {
+            const particle = document.createElement('div');
+            particle.className = 'cosmic-particle';
+            particle.textContent = cosmicSymbols[Math.floor(Math.random() * cosmicSymbols.length)];
+            particle.style.left = Math.random() * 95 + 'vw';
+            particle.style.animationDuration = (2.5 + Math.random() * 2) + 's';
+            document.body.appendChild(particle);
+    
+            setTimeout(() => particle.remove(), 4500);
+          }, i * 80);
+        }
+      }
+    
+      function speakCongrats() {
+        if ('speechSynthesis' in window) {
+          const msg = new SpeechSynthesisUtterance("Félicitations ! Vous avez collecté tous les fragments de votre passeport temporel.");
+          msg.lang = 'fr-FR';
+          msg.rate = 0.95;
+          window.speechSynthesis.speak(msg);
+        }
+      }
+    
+      simBtn.addEventListener('click', () => {
+        const lockedFragments = document.querySelectorAll('.fragment-card.locked');
+        if (lockedFragments.length > 0) {
+          playScanSound();
+    
+          const nextFragment = lockedFragments[0];
+          nextFragment.classList.remove('locked');
+          nextFragment.classList.add('unlocked');
+          
+          collectedCount++;
+          
+          if (descriptions[collectedCount]) {
+            nextFragment.querySelector('.fragment-text p').textContent = descriptions[collectedCount];
+          }
+    
+          nextFragment.querySelector('.node-dot').innerHTML = '<svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg>';
+          nextFragment.querySelector('.fragment-status').textContent = '✓ Collecté';
+          
+          progressText.textContent = `${collectedCount} / ${totalFragments} fragments collectés`;
+          progressFill.style.width = `${(collectedCount / totalFragments) * 100}%`;
+    
+          if (collectedCount === totalFragments) {
+            simBtn.textContent = "Les 5 fragments sont réunis ! 🎉";
+            simBtn.style.background = "#10b981";
+            simBtn.style.borderColor = "#10b981";
+            simBtn.style.boxShadow = "0 0 25px rgba(16, 185, 129, 0.7)";
+            
+            discoverSouvenirBtn.style.display = "block";
+            
+            launchCosmicRain();
+            speakCongrats();
+          }
+        }
+      });
+    
+      // Navigation vers l'écran de souvenir
+      discoverSouvenirBtn.addEventListener('click', () => {
+        timelineView.style.display = 'none';
+        souvenirView.style.display = 'block';
+      });
+    
+      document.getElementById('back-to-fragments').addEventListener('click', () => {
+        souvenirView.style.display = 'none';
+        timelineView.style.display = 'block';
+      });
+    
+      document.getElementById('continue-without-email').addEventListener('click', () => {
+        alert("Merci d'avoir visité l'exposition Big Bang ! Bon retour parmi nous.");
+        souvenirView.style.display = 'none';
+        timelineView.style.display = 'block';
+      });
+    
+      document.getElementById('send-souvenir-btn').addEventListener('click', () => {
+        const email = document.getElementById('visitor-email').value;
+        const consented = document.getElementById('rgpd-consent').checked;
+        if(!email) {
+          alert("Veuillez saisir une adresse e-mail valide.");
+          return;
+        }
+        if(!consented) {
+          alert("Veuillez accepter les conditions de consentement RGPD.");
+          return;
+        }
+        alert("Votre souvenir a bien été envoyé à " + email + " ! Merci de votre visite.");
+        souvenirView.style.display = 'none';
+        timelineView.style.display = 'block';
+      });
+    </script>
